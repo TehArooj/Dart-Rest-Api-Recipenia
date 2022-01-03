@@ -9,13 +9,14 @@ class API_Manager {
     var recipedatamodel;
     try {
       var client = http.Client();
-      var response = await client.get(Uri.parse(Strings.recipe_url));
+      var url = Uri.parse(Strings.recipe_url);
+      var response = await client.get(url);
       if (response.statusCode == 200) {
         //status = "success";
         var jsonstring = response.body;
         var jsonMap = json.decode(jsonstring);
         recipedatamodel = RecipeModel.fromJson(jsonMap);
-        print(recipedatamodel);
+        print(recipedatamodel.hits);
       } else {
         //status = "fail";
       }

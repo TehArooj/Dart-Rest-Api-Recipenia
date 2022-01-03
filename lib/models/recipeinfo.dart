@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+// To parse required required thisJSON data, do
 //
 //     final recipeModel = recipeModelFromJson(jsonString);
 
@@ -44,20 +44,16 @@ class RecipeModel {
 class Hit {
   Hit({
     required this.recipe,
-    required this.links,
   });
 
   Recipe recipe;
-  HitLinks links;
 
   factory Hit.fromJson(Map<String, dynamic> json) => Hit(
         recipe: Recipe.fromJson(json["recipe"]),
-        links: HitLinks.fromJson(json["_links"]),
       );
 
   Map<String, dynamic> toJson() => {
         "recipe": recipe.toJson(),
-        "_links": links.toJson(),
       };
 }
 
@@ -66,10 +62,10 @@ class HitLinks {
     required this.self,
   });
 
-  Next self;
+  Self self;
 
   factory HitLinks.fromJson(Map<String, dynamic> json) => HitLinks(
-        self: Next.fromJson(json["self"]),
+        self: Self.fromJson(json["self"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -77,30 +73,25 @@ class HitLinks {
       };
 }
 
-class Next {
-  Next({
+class Self {
+  Self({
     required this.href,
     required this.title,
   });
 
   String href;
-  Title? title;
+  String title;
 
-  factory Next.fromJson(Map<String, dynamic> json) => Next(
+  factory Self.fromJson(Map<String, dynamic> json) => Self(
         href: json["href"],
-        title: titleValues.map[json["title"]],
+        title: json["title"],
       );
 
   Map<String, dynamic> toJson() => {
         "href": href,
-        "title": titleValues.reverse[title],
+        "title": title,
       };
 }
-
-enum Title { NEXT_PAGE, SELF }
-
-final titleValues =
-    EnumValues({"Next page": Title.NEXT_PAGE, "Self": Title.SELF});
 
 class Recipe {
   Recipe({
@@ -120,12 +111,6 @@ class Recipe {
     required this.calories,
     required this.totalWeight,
     required this.totalTime,
-    required this.cuisineType,
-    required this.mealType,
-    required this.dishType,
-    required this.totalNutrients,
-    required this.totalDaily,
-    required this.digest,
   });
 
   String uri;
@@ -144,12 +129,6 @@ class Recipe {
   double calories;
   double totalWeight;
   int totalTime;
-  List<String> cuisineType;
-  List<MealType> mealType;
-  List<String> dishType;
-  Map<String, Total> totalNutrients;
-  Map<String, Total> totalDaily;
-  List<Digest> digest;
 
   factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
         uri: json["uri"],
@@ -170,16 +149,6 @@ class Recipe {
         calories: json["calories"].toDouble(),
         totalWeight: json["totalWeight"].toDouble(),
         totalTime: json["totalTime"],
-        cuisineType: List<String>.from(json["cuisineType"].map((x) => x)),
-        mealType: List<MealType>.from(
-            json["mealType"].map((x) => mealTypeValues.map[x])),
-        dishType: List<String>.from(json["dishType"].map((x) => x)),
-        totalNutrients: Map.from(json["totalNutrients"])
-            .map((k, v) => MapEntry<String, Total>(k, Total.fromJson(v))),
-        totalDaily: Map.from(json["totalDaily"])
-            .map((k, v) => MapEntry<String, Total>(k, Total.fromJson(v))),
-        digest:
-            List<Digest>.from(json["digest"].map((x) => Digest.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -199,15 +168,6 @@ class Recipe {
         "calories": calories,
         "totalWeight": totalWeight,
         "totalTime": totalTime,
-        "cuisineType": List<dynamic>.from(cuisineType.map((x) => x)),
-        "mealType":
-            List<dynamic>.from(mealType.map((x) => mealTypeValues.reverse[x])),
-        "dishType": List<dynamic>.from(dishType.map((x) => x)),
-        "totalNutrients": Map.from(totalNutrients)
-            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-        "totalDaily": Map.from(totalDaily)
-            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-        "digest": List<dynamic>.from(digest.map((x) => x.toJson())),
       };
 }
 
@@ -225,7 +185,7 @@ class Digest {
 
   String label;
   String tag;
-  SchemaOrgTag? schemaOrgTag;
+  String schemaOrgTag;
   double total;
   bool hasRdi;
   double daily;
@@ -235,9 +195,8 @@ class Digest {
   factory Digest.fromJson(Map<String, dynamic> json) => Digest(
         label: json["label"],
         tag: json["tag"],
-        schemaOrgTag: json["schemaOrgTag"] == null
-            ? null
-            : schemaOrgTagValues.map[json["schemaOrgTag"]],
+        schemaOrgTag:
+            json["schemaOrgTag"] == null ? null : json["schemaOrgTag"],
         total: json["total"].toDouble(),
         hasRdi: json["hasRDI"],
         daily: json["daily"].toDouble(),
@@ -250,42 +209,16 @@ class Digest {
   Map<String, dynamic> toJson() => {
         "label": label,
         "tag": tag,
-        "schemaOrgTag": schemaOrgTag == null
-            ? null
-            : schemaOrgTagValues.reverse[schemaOrgTag],
+        "schemaOrgTag": schemaOrgTag == null ? null : schemaOrgTag,
         "total": total,
         "hasRDI": hasRdi,
         "daily": daily,
-        "unit": unitValues.reverse[unit],
+        "unit": unitValues.reverse![unit],
         "sub": sub == null
             ? null
             : List<dynamic>.from(sub!.map((x) => x.toJson())),
       };
 }
-
-enum SchemaOrgTag {
-  FAT_CONTENT,
-  CARBOHYDRATE_CONTENT,
-  PROTEIN_CONTENT,
-  CHOLESTEROL_CONTENT,
-  SODIUM_CONTENT,
-  SATURATED_FAT_CONTENT,
-  TRANS_FAT_CONTENT,
-  FIBER_CONTENT,
-  SUGAR_CONTENT
-}
-
-final schemaOrgTagValues = EnumValues({
-  "carbohydrateContent": SchemaOrgTag.CARBOHYDRATE_CONTENT,
-  "cholesterolContent": SchemaOrgTag.CHOLESTEROL_CONTENT,
-  "fatContent": SchemaOrgTag.FAT_CONTENT,
-  "fiberContent": SchemaOrgTag.FIBER_CONTENT,
-  "proteinContent": SchemaOrgTag.PROTEIN_CONTENT,
-  "saturatedFatContent": SchemaOrgTag.SATURATED_FAT_CONTENT,
-  "sodiumContent": SchemaOrgTag.SODIUM_CONTENT,
-  "sugarContent": SchemaOrgTag.SUGAR_CONTENT,
-  "transFatContent": SchemaOrgTag.TRANS_FAT_CONTENT
-});
 
 enum Unit { G, MG, UNIT_G, EMPTY, KCAL }
 
@@ -302,26 +235,22 @@ class Images {
     required this.thumbnail,
     required this.small,
     required this.regular,
-    required this.large,
   });
 
   Regular thumbnail;
   Regular small;
   Regular regular;
-  Regular? large;
 
   factory Images.fromJson(Map<String, dynamic> json) => Images(
         thumbnail: Regular.fromJson(json["THUMBNAIL"]),
         small: Regular.fromJson(json["SMALL"]),
         regular: Regular.fromJson(json["REGULAR"]),
-        large: json["LARGE"] == null ? null : Regular.fromJson(json["LARGE"]),
       );
 
   Map<String, dynamic> toJson() => {
         "THUMBNAIL": thumbnail.toJson(),
         "SMALL": small.toJson(),
         "REGULAR": regular.toJson(),
-        "LARGE": large == null ? null : large!.toJson(),
       };
 }
 
@@ -353,54 +282,33 @@ class Ingredient {
   Ingredient({
     required this.text,
     required this.quantity,
-    required this.measure,
     required this.food,
     required this.weight,
-    required this.foodCategory,
-    required this.foodId,
     required this.image,
   });
 
   String text;
   double quantity;
-  String measure;
   String food;
   double weight;
-  String foodCategory;
-  String foodId;
   String image;
 
   factory Ingredient.fromJson(Map<String, dynamic> json) => Ingredient(
         text: json["text"],
         quantity: json["quantity"].toDouble(),
-        measure: json["measure"] == null ? null : json["measure"],
         food: json["food"],
         weight: json["weight"].toDouble(),
-        foodCategory:
-            json["foodCategory"] == null ? null : json["foodCategory"],
-        foodId: json["foodId"],
-        image: json["image"] == null ? null : json["image"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
         "text": text,
         "quantity": quantity,
-        "measure": measure == null ? null : measure,
         "food": food,
         "weight": weight,
-        "foodCategory": foodCategory == null ? null : foodCategory,
-        "foodId": foodId,
-        "image": image == null ? null : image,
+        "image": image,
       };
 }
-
-enum MealType { LUNCH_DINNER, BREAKFAST, SNACK }
-
-final mealTypeValues = EnumValues({
-  "breakfast": MealType.BREAKFAST,
-  "lunch/dinner": MealType.LUNCH_DINNER,
-  "snack": MealType.SNACK
-});
 
 class Total {
   Total({
@@ -422,34 +330,26 @@ class Total {
   Map<String, dynamic> toJson() => {
         "label": label,
         "quantity": quantity,
-        "unit": unitValues.reverse[unit],
+        "unit": unitValues.reverse![unit],
       };
 }
 
 class RecipeModelLinks {
-  RecipeModelLinks({
-    required this.next,
-  });
-
-  Next next;
+  RecipeModelLinks();
 
   factory RecipeModelLinks.fromJson(Map<String, dynamic> json) =>
-      RecipeModelLinks(
-        next: Next.fromJson(json["next"]),
-      );
+      RecipeModelLinks();
 
-  Map<String, dynamic> toJson() => {
-        "next": next.toJson(),
-      };
+  Map<String, dynamic> toJson() => {};
 }
 
 class EnumValues<T> {
   Map<String, T> map;
-  late Map<T, String> reverseMap;
+  Map<T, String>? reverseMap;
 
   EnumValues(this.map);
 
-  Map<T, String> get reverse {
+  Map<T, String>? get reverse {
     if (reverseMap == null) {
       reverseMap = map.map((k, v) => new MapEntry(v, k));
     }
