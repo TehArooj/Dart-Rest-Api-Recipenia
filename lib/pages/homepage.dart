@@ -20,15 +20,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Rest API Code"),
       ),
-      body: Container(/*
+      body: Container(
         child: FutureBuilder<RecipeModel>(
           future: apidata,
           builder: (context, snapshot) {
-             if (snapshot.hasData) {
+            if (snapshot.hasData) {
               return ListView.builder(
                   itemCount: snapshot.data!.count,
                   itemBuilder: (context, index) {
-                    var recipe = snapshot.data!.[index];
+                    var recipeCard = snapshot.data!.hits[index];
                     return Container(
                       height: 100,
                       margin: const EdgeInsets.all(8),
@@ -37,22 +37,30 @@ class _HomePageState extends State<HomePage> {
                           Card(
                             child: AspectRatio(
                               aspectRatio: 1,
-                              child: Image.network(recipe.urlToImage,
-                                  fit: BoxFit.cover),
+                              child:
+                                  Image.network(recipeCard.recipe.image ?? "",
+                                      headers: const {
+                                        "Access-Control-Allow-Origin": "*",
+                                      },
+                                      fit: BoxFit.cover),
                             ),
                           ),
-                          Flexible(child: Text(recipe.links)),
-                          Flexible(child: Text(recipe.recipe)),
+                          Flexible(
+                              child: Text(
+                                  recipeCard.recipe.ingredients.toString())),
+                          Flexible(
+                              child: Text(recipeCard.recipe.ingredientLines
+                                  .toString())),
                         ],
                       ),
                     );
                   });
             } else {
-              return Center(child: CircularProgressIndicator());
-            } 
+              return const Center(child: CircularProgressIndicator());
+            }
           },
-        ),*/
         ),
-      );
+      ),
+    );
   }
 }

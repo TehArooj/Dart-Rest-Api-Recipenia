@@ -10,7 +10,10 @@ class API_Manager {
     try {
       var client = http.Client();
       var url = Uri.parse(Strings.recipe_url);
-      var response = await client.get(url);
+      var response = await client.get(url, headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+      });
       if (response.statusCode == 200) {
         //status = "success";
         var jsonstring = response.body;
