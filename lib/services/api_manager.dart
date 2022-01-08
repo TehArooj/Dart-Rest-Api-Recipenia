@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
 import 'package:http/http.dart' as http;
 import 'package:rest_api/constants/strings.dart';
 import 'package:rest_api/models/recipeinfo.dart';
