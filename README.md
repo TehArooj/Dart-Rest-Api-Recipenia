@@ -1,4 +1,4 @@
-# RECEIPE APP
+# Recipe App
 
 Recipe app that uses Firebase authentication, gets data from recipe API and shows each recipe card details.
 User can add new recipes and store it to firebase firestore.
