@@ -1,9 +1,7 @@
-//import 'dart:html';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:rest_api/models/recipeinfo.dart';
-import 'package:rest_api/pages/add_Recipe.dart';
-import 'package:rest_api/pages/one_recipe.dart';
 import 'package:rest_api/services/api_manager.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 //import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -39,19 +37,8 @@ class _HomePageState extends State<HomePage> {
         MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddRecipe()),
-          );
-          FloatingActionButtonLocation.endFloat;
-        },
-      ),
       appBar: AppBar(
-        title: const Text("Recipe App"),
+        title: Text("Recipe App"),
       ),
       body: Column(
         children: [
@@ -84,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                 FloatingSearchBarAction(
                   showIfOpened: false,
                   child: CircularButton(
-                    icon: const Icon(Icons.search),
+                    icon: const Icon(Icons.place),
                     onPressed: () {},
                   ),
                 ),
@@ -108,49 +95,32 @@ class _HomePageState extends State<HomePage> {
                   return ListView.builder(
                       itemCount: snapshot.data!.count,
                       itemBuilder: (context, index) {
-                        if (index < 20) {
-                          var recipeCard = snapshot.data!.hits[index];
-                          return TextButton(
-                            onPressed: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        oneRecipe(recipe: recipeCard.recipe)),
-                              )
-                            },
-                            child: Container(
-                              height: 100,
-                              margin: const EdgeInsets.all(8),
-                              child: Row(
-                                children: [
-                                  Card(
-                                    child: AspectRatio(
-                                      aspectRatio: 1,
-                                      child: Image.network(
-                                          recipeCard.recipe.image ?? "",
-                                          headers: const {
-                                            "Access-Control-Allow-Origin": "*",
-                                          },
-                                          fit: BoxFit.cover),
-                                    ),
-                                  ),
-                                  Expanded(
-                                      child: Text(
-                                          recipeCard.recipe.label.toString())),
-                                  Expanded(
-                                      child: Text(
-                                    recipeCard.recipe.totalTime.toString() +
-                                        " min",
-                                    textAlign: TextAlign.right,
-                                  )),
-                                ],
+                        var recipeCard = snapshot.data!.hits[index];
+                        return Container(
+                          height: 100,
+                          margin: const EdgeInsets.all(8),
+                          child: Row(
+                            children: [
+                              Card(
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Image.network(
+                                      recipeCard.recipe.image ?? "",
+                                      headers: const {
+                                        "Access-Control-Allow-Origin": "*",
+                                      },
+                                      fit: BoxFit.cover),
+                                ),
                               ),
-                            ),
-                          );
-                        } else {
-                          return Container();
-                        }
+                              Flexible(
+                                  child:
+                                      Text(recipeCard.recipe.label.toString())),
+                              Flexible(
+                                  child: Text(recipeCard.recipe.ingredientLines
+                                      .toString())),
+                            ],
+                          ),
+                        );
                       });
                 } else {
                   return const Center(child: CircularProgressIndicator());
@@ -158,6 +128,8 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
+
+          //yeh child masla hai mtlb k i don't know how to integrate kuch b
         ],
       ),
     );
