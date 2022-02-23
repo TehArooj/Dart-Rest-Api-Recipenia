@@ -1,4 +1,4 @@
-// To parse required required thisJSON data, do
+// To parse   thisJSON data, do
 //
 //     final recipeModel = recipeModelFromJson(jsonString);
 
@@ -11,18 +11,18 @@ String? recipeModelToJson(RecipeModel data) => json.encode(data.toJson());
 
 class RecipeModel {
   RecipeModel({
-    required this.from,
-    required this.to,
-    required this.count,
-    required this.links,
-    required this.hits,
+    this.from,
+    this.to,
+    this.count,
+    this.links,
+    this.hits,
   });
 
   int? from;
   int? to;
   int? count;
-  RecipeModelLinks links;
-  List<Hit> hits;
+  RecipeModelLinks? links;
+  List<Hit>? hits;
 
   factory RecipeModel.fromJson(Map<String?, dynamic> json) => RecipeModel(
         from: json["from"],
@@ -36,47 +36,47 @@ class RecipeModel {
         "from": from,
         "to": to,
         "count": count,
-        "_links": links.toJson(),
-        "hits": List<dynamic>.from(hits.map((x) => x.toJson())),
+        "_links": links!.toJson(),
+        "hits": List<dynamic>.from(hits!.map((x) => x.toJson())),
       };
 }
 
 class Hit {
   Hit({
-    required this.recipe,
+    this.recipe,
   });
 
-  Recipe recipe;
+  Recipe? recipe;
 
   factory Hit.fromJson(Map<String?, dynamic> json) => Hit(
         recipe: Recipe.fromJson(json["recipe"]),
       );
 
   Map<String?, dynamic> toJson() => {
-        "recipe": recipe.toJson(),
+        "recipe": recipe!.toJson(),
       };
 }
 
 class HitLinks {
   HitLinks({
-    required this.self,
+    this.self,
   });
 
-  Self self;
+  Self? self;
 
   factory HitLinks.fromJson(Map<String?, dynamic> json) => HitLinks(
         self: Self.fromJson(json["self"]),
       );
 
   Map<String?, dynamic> toJson() => {
-        "self": self.toJson(),
+        "self": self!.toJson(),
       };
 }
 
 class Self {
   Self({
-    required this.href,
-    required this.title,
+    this.href,
+    this.title,
   });
 
   String? href;
@@ -95,40 +95,40 @@ class Self {
 
 class Recipe {
   Recipe({
-    required this.uri,
-    required this.label,
-    required this.image,
-    required this.images,
-    required this.source,
-    required this.url,
-    required this.shareAs,
-    required this.recipeYield,
-    required this.dietLabels,
-    required this.healthLabels,
-    required this.cautions,
-    required this.ingredientLines,
-    required this.ingredients,
-    required this.calories,
-    required this.totalWeight,
-    required this.totalTime,
+    this.uri,
+    this.label,
+    this.image,
+    this.images,
+    this.source,
+    this.url,
+    this.shareAs,
+    this.recipeYield,
+    this.dietLabels,
+    this.healthLabels,
+    this.cautions,
+    this.ingredientLines,
+    this.ingredients,
+    this.calories,
+    this.totalWeight,
+    this.totalTime,
   });
 
   String? uri;
   String? label;
   String? image;
-  Images images;
+  Images? images;
   String? source;
   String? url;
   String? shareAs;
-  int? recipeYield;
-  List<String?> dietLabels;
-  List<String?> healthLabels;
-  List<String?> cautions;
-  List<String?> ingredientLines;
-  List<Ingredient> ingredients;
+  double? recipeYield;
+  List<String?>? dietLabels;
+  List<String?>? healthLabels;
+  List<String?>? cautions;
+  List<String?>? ingredientLines;
+  List<Ingredient>? ingredients;
   double? calories;
   double? totalWeight;
-  int? totalTime;
+  double? totalTime;
 
   factory Recipe.fromJson(Map<String?, dynamic> json) => Recipe(
         uri: json["uri"],
@@ -155,16 +155,16 @@ class Recipe {
         "uri": uri,
         "label": label,
         "image": image,
-        "images": images.toJson(),
+        "images": images!.toJson(),
         "source": source,
         "url": url,
         "shareAs": shareAs,
         "yield": recipeYield,
-        "dietLabels": List<dynamic>.from(dietLabels.map((x) => x)),
-        "healthLabels": List<dynamic>.from(healthLabels.map((x) => x)),
-        "cautions": List<dynamic>.from(cautions.map((x) => x)),
-        "ingredientLines": List<dynamic>.from(ingredientLines.map((x) => x)),
-        "ingredients": List<dynamic>.from(ingredients.map((x) => x.toJson())),
+        "dietLabels": List<dynamic>.from(dietLabels!.map((x) => x)),
+        "healthLabels": List<dynamic>.from(healthLabels!.map((x) => x)),
+        "cautions": List<dynamic>.from(cautions!.map((x) => x)),
+        "ingredientLines": List<dynamic>.from(ingredientLines!.map((x) => x)),
+        "ingredients": List<dynamic>.from(ingredients!.map((x) => x.toJson())),
         "calories": calories,
         "totalWeight": totalWeight,
         "totalTime": totalTime,
@@ -173,21 +173,21 @@ class Recipe {
 
 class Digest {
   Digest({
-    required this.label,
-    required this.tag,
-    required this.schemaOrgTag,
-    required this.total,
-    required this.hasRdi,
-    required this.daily,
-    required this.unit,
-    required this.sub,
+    this.label,
+    this.tag,
+    this.schemaOrgTag,
+    this.total,
+    this.hasRdi,
+    this.daily,
+    this.unit,
+    this.sub,
   });
 
   String? label;
   String? tag;
   String? schemaOrgTag;
   double? total;
-  bool hasRdi;
+  bool? hasRdi;
   double? daily;
   Unit? unit;
   List<Digest>? sub;
@@ -232,14 +232,14 @@ final unitValues = EnumValues({
 
 class Images {
   Images({
-    required this.thumbnail,
-    required this.small,
-    required this.regular,
+    this.thumbnail,
+    this.small,
+    this.regular,
   });
 
-  Regular thumbnail;
-  Regular small;
-  Regular regular;
+  Regular? thumbnail;
+  Regular? small;
+  Regular? regular;
 
   factory Images.fromJson(Map<String?, dynamic> json) => Images(
         thumbnail: Regular.fromJson(json["THUMBNAIL"]),
@@ -248,17 +248,17 @@ class Images {
       );
 
   Map<String?, dynamic> toJson() => {
-        "THUMBNAIL": thumbnail.toJson(),
-        "SMALL": small.toJson(),
-        "REGULAR": regular.toJson(),
+        "THUMBNAIL": thumbnail!.toJson(),
+        "SMALL": small!.toJson(),
+        "REGULAR": regular!.toJson(),
       };
 }
 
 class Regular {
   Regular({
-    required this.url,
-    required this.width,
-    required this.height,
+    this.url,
+    this.width,
+    this.height,
   });
 
   String? url;
@@ -280,11 +280,11 @@ class Regular {
 
 class Ingredient {
   Ingredient({
-    required this.text,
-    required this.quantity,
-    required this.food,
-    required this.weight,
-    required this.image,
+    this.text,
+    this.quantity,
+    this.food,
+    this.weight,
+    this.image,
   });
 
   String? text;
@@ -312,9 +312,9 @@ class Ingredient {
 
 class Total {
   Total({
-    required this.label,
-    required this.quantity,
-    required this.unit,
+    this.label,
+    this.quantity,
+    this.unit,
   });
 
   String? label;

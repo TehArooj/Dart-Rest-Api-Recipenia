@@ -1,8 +1,15 @@
+//import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:rest_api/pages/homepage.dart';
+import 'package:rest_api/pages/login.dart';
+import 'package:provider/provider.dart';
+import 'package:rest_api/models/userstate.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => UserModel(), child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -13,11 +20,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Recipe App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
-      home: HomePage(), //SearchPage(),
+      home: const Login(),
+      routes: {
+        "/login": (_) => const Login(),
+        "/homepage": (_) => HomePage(),
+      },
     );
   }
 }

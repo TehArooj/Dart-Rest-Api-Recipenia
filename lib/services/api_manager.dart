@@ -20,6 +20,7 @@ class API_Manager {
         if (jsonMap == null) {
           return null;
         }
+        print(jsonMap);
         recipedatamodel = RecipeModel.fromJson(jsonMap);
         print(recipedatamodel.hits);
       } else {
