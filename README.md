@@ -1,6 +1,6 @@
-# rest_api
+# RECEIPE APP
 
-A new Flutter project.
+Recipe app that uses Firebase authentication, gets data from recipe API and shows each recipe card details
 
 ## Getting Started
 
